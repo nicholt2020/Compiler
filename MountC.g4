@@ -30,13 +30,17 @@ expr_list_tail: ',' expr expr_list_tail
     |           /* epsilon */
     ;
 
-expr:    expr '?' expr ':' expr  # ifStatement
+expr:    expr thenPart expr elsePart expr  # ifExpr
+    |    term                    # termExpr
     |    term expr_tail          # termExprTail
     |    '(' expr_list ')'       # exprList
     ;
 
-expr_tail:    op expr
-    |         /* epsilon */
+thenPart: '?' ;
+elsePart: ':' ;
+
+expr_tail:    op expr    #opExpr
+    |         /* epsilon */ #nothingExpr
     ;
 
 term: NUM            # numTerm
