@@ -1,0 +1,40 @@
+	SUBSP	2,i
+	CALL	main
+	ADDSP	2,i
+	STOP
+putint:	DECO	2,s
+	LDWA	2,s
+	STWA	4,s
+	RET
+getint:	DECI	2,s
+	RET
+main:	NOP0
+	SUBSP	2,i
+	LDWA	8,i
+	ADDA	0,s
+	ADDSP	2,i
+	SUBSP	2,i
+	STWA	0,s
+	LDWA	1,i
+	ADDA	0,s
+	ADDSP	2,i
+	SUBSP	2,i
+	STWA	0,s
+	LDWA	1,i
+	NEGA
+	ADDA	0,s
+	ADDSP	2,i
+	SUBSP	2,i
+	STWA	0,s
+	SUBSP	2,i
+	CALL	getint
+	ADDSP	2,i
+	LDWA	-2,s
+	SUBSP	2,i
+	STWA	0,s
+	CALL	putint
+	ADDSP	4,i
+	LDWA	-2,s
+	STWA	2,s
+	RET
+	.END
