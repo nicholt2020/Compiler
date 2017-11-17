@@ -1,8 +1,8 @@
 s:	.EQUATE 0
 
-	SUBSP	2,i
+	SUBSP	4,i
 	CALL	main
-	ADDSP	2,i
+	ADDSP	4,i
 	STOP
 putint:	DECO	2,s
 	LDWA	2,s
@@ -31,4 +31,3 @@ main:	NOP0
 	STWA	2,s
 	RET
 	.END
-
