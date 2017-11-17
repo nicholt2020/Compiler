@@ -1,3 +1,5 @@
+s:	.EQUATE 0
+
 	SUBSP	2,i
 	CALL	main
 	ADDSP	2,i
@@ -24,7 +26,11 @@ main:	NOP0
 	ADDSP	2,i
 	ADDA	0,s
 	ADDSP	2,i
+	STWA	s,x
+	LWDA	0,s
 	NEGA
+	STWA	0,s
+	LDWA	s,x
 	ADDA	0,s
 	ADDSP	2,i
 	SUBSP	2,i
