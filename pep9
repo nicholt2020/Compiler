@@ -24,6 +24,9 @@ main:	NOP0
 	LDWA	s,x
 	ADDA	1,i
 	STWA	s,x
+	LDWA	s,x
+	ADDA	8,i
+	STWA	s,x
 	STWA	2,s
 	RET
 	.END
