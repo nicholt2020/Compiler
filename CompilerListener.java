@@ -18,9 +18,10 @@ public class CompilerListener extends MountCBaseListener {
 
   @Override
   public void enterProgram(MountCParser.ProgramContext ctx) {
-    System.out.println("\n\tSUBSP\t2,i");
+    System.out.println("s:\t.EQUATE 0");
+    System.out.println("\n\tSUBSP\t4,i");
     System.out.println("\tCALL\tmain");
-    System.out.println("\tADDSP\t2,i");
+    System.out.println("\tADDSP\t4,i");
     System.out.println("\tSTOP");
     System.out.println("putint:\tDECO\t2,s");
     System.out.println("\tLDWA\t2,s");
@@ -50,52 +51,55 @@ public class CompilerListener extends MountCBaseListener {
 
   @Override
   public void enterNumTerm(MountCParser.NumTermContext ctx) {
-        //System.out.println("\tLDWA\t" + ctx.NUM() + ",i");
-  }
+        //if(ctx.getParent().getParent().getChild(0).getChild(0).toString().equals("-")){
+        //   System.out.println("\tLDWA\t" + ctx.NUM() + ",i");
+        //   System.out.println("\tNEGA\t");
+        //} else {
+        //  System.out.println("\tLDWA\t" + ctx.NUM() + ",i");
+        //}
 
-  @Override
-  public void exitNumTerm(MountCParser.NumTermContext ctx) {
-        System.out.println("\tSUBSP\t2,i");
-        System.out.println("\tLDWA\t" + ctx.NUM() + ",i");
-        if (minus) {
-          System.out.println("\tNEGA\t");
-          System.out.println("\tSTWA\t0,s");
-          minus = false;
-        } else {
-          System.out.println("\tSTWA\t0,s");
+        String op = ctx.getParent().getParent().getChild(0).getChild(0).toString();
+        switch(op){
+          case "-": //System.out.println("\tSUBSP\t2,i");
+                    //System.out.println("\tLDWA\t" + ctx.NUM() + ",i");
+                    //System.out.println("\tNEGA\t");
+                    //System.out.println("\tSTWA\t0,s");
+                    //System.out.println("\tLDWA\ts,x");
+                    //System.out.println("\tADDA\t0,s");
+                    //System.out.println("\tSTWA\ts,x");
+                    //System.out.println("\tADDSP\t2,i");
+                    System.out.println("\tLDWA\ts,x");
+                    System.out.println("\tSUBA\t" + ctx.NUM() + ",i");
+                    System.out.println("\tSTWA\ts,x");
+                    break;
+          case "+": System.out.println("\tLDWA\ts,x");
+                    System.out.println("\tADDA\t" + ctx.NUM() + ",i");
+                    System.out.println("\tSTWA\ts,x");
+                    break;
+          default:  System.out.println("\tLDWA\t" + ctx.NUM() + ",i");
+                    System.out.println("\tSTWA\t s,x");
+                    break;
         }
-
   }
+
 
   @Override
   public void enterAddOp(MountCParser.AddOpContext ctx) {
         //System.out.println("\tSUBSP\t2,i");
         //System.out.println("\tSTWA\t0,s");
+
   }
 
   @Override
   public void enterMinusOp(MountCParser.MinusOpContext ctx) {
-    minus = true;
     //System.out.println("\tSUBSP\t2,i");
-    //System.out.println("\tNEGA\t");
     //System.out.println("\tSTWA\t0,s");
   }
 
   @Override
   public void exitOpExpr(MountCParser.OpExprContext ctx) {
-      String op = ctx.getChild(0).getChild(0).toString();
-      switch(op){
-          case "+":
-            System.out.println("\tADDA\t0,s");
-            System.out.println("\tADDSP\t2,i");
-            break;
-          case "-":
-            //System.out.println("\tNEGA");
-            System.out.println("\tADDA\t0,s");
-            //System.out.println("\tNEGA");
-            System.out.println("\tADDSP\t2,i");
-            break;
-      }
+      //System.out.println("\tADDA\t0,s");
+      //System.out.println("\tADDSP\t2,i");
   }
 
   @Override
@@ -119,7 +123,22 @@ public class CompilerListener extends MountCBaseListener {
       System.out.println("\tCALL\t" + id);
       int numBytesToPop = 2*(symtab.get(id) + 1);  //  Won't get here if id not in symtab.
       System.out.println("\tADDSP\t" + numBytesToPop + ",i");
-      System.out.println("\tLDWA\t-2,s");
+      //System.out.println(ctx.getParent().getParent().getParent().getChild(0).getChild(0).toString());
+      String op = ctx.getParent().getParent().getParent().getChild(0).getChild(0).toString();
+      switch(op){
+        case "-": System.out.println("\tLDWA\ts,x");
+                  System.out.println("\tSUBA\t-2,s");
+                  System.out.println("\tSTWA\ts,x");
+                  System.out.println("\tLDWA\ts,x");
+                  break;
+        case "+": System.out.println("\tLDWA\ts,x");
+                  System.out.println("\tADDA\t-2,s");
+                  System.out.println("\tSTWA\ts,x");
+                  System.out.println("\tLDWA\ts,x");
+                  break;
+        default:  System.out.println("\tLDWA\t-2,s");
+                  break;
+      }
   }
 
   @Override
