@@ -1,3 +1,5 @@
+s:	.EQUATE 0
+
 	SUBSP	2,i
 	CALL	main
 	ADDSP	2,i
@@ -11,28 +13,19 @@ getint:	DECI	2,s
 main:	NOP0
 	LDWA	8,i
 	SUBSP	2,i
-	STWA	0,s
+	CALL	getint
+	ADDSP	2,i
+	LDWA	-2,s
+	NEGA
+	ADDA	s,x
 	SUBSP	2,i
 	CALL	getint
 	ADDSP	2,i
 	LDWA	-2,s
 	NEGA
-	SUBSP	2,i
-	STWA	0,s
-	SUBSP	2,i
-	CALL	getint
-	ADDSP	2,i
-	LDWA	-2,s
-	NEGA
-	SUBSP	2,i
-	STWA	0,s
+	ADDA	s,x
 	LDWA	1,i
-	ADDA	0,s
-	ADDSP	2,i
-	ADDA	0,s
-	ADDSP	2,i
-	ADDA	0,s
-	ADDSP	2,i
+	ADDA	s,x
 	STWA	2,s
 	RET
 	.END
