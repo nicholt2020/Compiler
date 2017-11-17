@@ -13,14 +13,9 @@ getint:	DECI	2,s
 main:	NOP0
 	LDWA	8,i
 	STWA	 s,x
-	SUBSP	2,i
-	LDWA	1,i
-	NEGA	
-	STWA	0,s
 	LDWA	s,x
-	ADDA	0,s
+	SUBA	1,i
 	STWA	s,x
-	ADDSP	2,i
 	LDWA	s,x
 	ADDA	1,i
 	STWA	s,x
