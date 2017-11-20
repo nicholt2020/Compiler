@@ -31,7 +31,7 @@ main:	NOP0
 	SUBSP	2,i
 	CALL	getint
 	ADDSP	2,i
-	ADDA	0,s
+	ADDA	-2,s
 	STWA	0,s
 	CALL	putint
 	ADDSP	4,i
