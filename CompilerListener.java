@@ -51,55 +51,7 @@ public class CompilerListener extends MountCBaseListener {
 
   @Override
   public void enterNumTerm(MountCParser.NumTermContext ctx) {
-        //if(ctx.getParent().getParent().getChild(0).getChild(0).toString().equals("-")){
-        //   System.out.println("\tLDWA\t" + ctx.NUM() + ",i");
-        //   System.out.println("\tNEGA\t");
-        //} else {
-        //  System.out.println("\tLDWA\t" + ctx.NUM() + ",i");
-        //}
-
-        String op = ctx.getParent().getParent().getChild(0).getChild(0).toString();
-        switch(op){
-          case "-": //System.out.println("\tSUBSP\t2,i");
-                    //System.out.println("\tLDWA\t" + ctx.NUM() + ",i");
-                    //System.out.println("\tNEGA\t");
-                    //System.out.println("\tSTWA\t0,s");
-                    //System.out.println("\tLDWA\ts,x");
-                    //System.out.println("\tADDA\t0,s");
-                    //System.out.println("\tSTWA\ts,x");
-                    //System.out.println("\tADDSP\t2,i");
-                    System.out.println("\tLDWA\ts,x");
-                    System.out.println("\tSUBA\t" + ctx.NUM() + ",i");
-                    System.out.println("\tSTWA\ts,x");
-                    break;
-          case "+": System.out.println("\tLDWA\ts,x");
-                    System.out.println("\tADDA\t" + ctx.NUM() + ",i");
-                    System.out.println("\tSTWA\ts,x");
-                    break;
-          default:  System.out.println("\tLDWA\t" + ctx.NUM() + ",i");
-                    System.out.println("\tSTWA\t s,x");
-                    break;
-        }
-  }
-
-
-  @Override
-  public void enterAddOp(MountCParser.AddOpContext ctx) {
-        //System.out.println("\tSUBSP\t2,i");
-        //System.out.println("\tSTWA\t0,s");
-
-  }
-
-  @Override
-  public void enterMinusOp(MountCParser.MinusOpContext ctx) {
-    //System.out.println("\tSUBSP\t2,i");
-    //System.out.println("\tSTWA\t0,s");
-  }
-
-  @Override
-  public void exitOpExpr(MountCParser.OpExprContext ctx) {
-      //System.out.println("\tADDA\t0,s");
-      //System.out.println("\tADDSP\t2,i");
+        System.out.println("\tLDWA\t" + ctx.NUM() + ",i");
   }
 
   @Override
@@ -123,28 +75,21 @@ public class CompilerListener extends MountCBaseListener {
       System.out.println("\tCALL\t" + id);
       int numBytesToPop = 2*(symtab.get(id) + 1);  //  Won't get here if id not in symtab.
       System.out.println("\tADDSP\t" + numBytesToPop + ",i");
-      //System.out.println(ctx.getParent().getParent().getParent().getChild(0).getChild(0).toString());
-      String op = ctx.getParent().getParent().getParent().getChild(0).getChild(0).toString();
-      switch(op){
-        case "-": System.out.println("\tLDWA\ts,x");
-                  System.out.println("\tSUBA\t-2,s");
-                  System.out.println("\tSTWA\ts,x");
-                  System.out.println("\tLDWA\ts,x");
-                  break;
-        case "+": System.out.println("\tLDWA\ts,x");
-                  System.out.println("\tADDA\t-2,s");
-                  System.out.println("\tSTWA\ts,x");
-                  System.out.println("\tLDWA\ts,x");
-                  break;
-        default:  System.out.println("\tLDWA\t-2,s");
-                  break;
-      }
   }
 
   @Override
-  public void exitArgListExpr(MountCParser.ArgListExprContext ctx) {
-    System.out.println("\tSUBSP\t2,i");
-    System.out.println("\tSTWA\t0,s");
+  public void enterExpr_tail(MountCParser.Expr_tailContext ctx) {
+      //System.out.println("Info: " + ctx.getParent().getParent().getClass().getName());
+      if(!ctx.getParent().getParent().getClass().equals(MountCParser.Expr_tailContext.class)){
+          System.out.println("\tSUBSP\t2,i");
+          System.out.println("\tSTWA\t0,s");
+      } else {
+          if(ctx.getParent().getParent().getChild(0).getChild(0).toString().equals("-")){
+             System.out.println("\tNEGA");
+          }
+          System.out.println("\tADDA\t0,s");
+          System.out.println("\tSTWA\t0,s");
+      }
   }
 
 }
