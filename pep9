@@ -23,10 +23,8 @@ main:	NOP0
 	ADDA	0,s
 	STWA	0,s
 	ADDSP	2,i
-	ADDSP	
-	LDWA	2,s
 	ADDA	0,s
-	STWA	0,s
+	ADDSP	2,i
 	STWA	2,s
 	RET
 	.END
