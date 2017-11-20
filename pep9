@@ -19,6 +19,8 @@ main:	NOP0
 	ADDA	0,s
 	STWA	0,s
 	LDWA	9,i
+	NEGA	
+	ADDA	0,s
 	STWA	2,s
 	RET
 	.END
