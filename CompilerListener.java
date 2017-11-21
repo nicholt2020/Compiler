@@ -14,14 +14,12 @@ public class CompilerListener extends MountCBaseListener {
   //  It stores the number of arguments in the formal argument list
   //  for a function, using the function's name as the key.
   private HashMap<String, Integer> symtab =  new HashMap<>();
-  private boolean minus = false;
 
   @Override
   public void enterProgram(MountCParser.ProgramContext ctx) {
-    System.out.println("s:\t.EQUATE 0");
-    System.out.println("\n\tSUBSP\t4,i");
+    System.out.println("\tSUBSP\t2,i");
     System.out.println("\tCALL\tmain");
-    System.out.println("\tADDSP\t4,i");
+    System.out.println("\tADDSP\t2,i");
     System.out.println("\tSTOP");
     System.out.println("putint:\tDECO\t2,s");
     System.out.println("\tLDWA\t2,s");
@@ -75,7 +73,27 @@ public class CompilerListener extends MountCBaseListener {
       System.out.println("\tCALL\t" + id);
       int numBytesToPop = 2*(symtab.get(id) + 1);  //  Won't get here if id not in symtab.
       System.out.println("\tADDSP\t" + numBytesToPop + ",i");
+      System.out.println("\tLDWA\t-2,s");
   }
+
+  @Override public void enterExprList(MountCParser.ExprListContext ctx) {
+      //System.out.println("Entering..");
+      //if(ctx.getParent().getChild(0).getChild(0).toString().equals("-")){
+      //  System.out.println("\tNEGA");
+      //}
+      //System.out.println("\tADDA\t0,s");
+      //System.out.println("\tSTWA\t0,s");
+  }
+  @Override public void exitExprList(MountCParser.ExprListContext ctx) {
+    //System.out.println("\tExiting Expr List");
+    if(ctx.getParent().getParent().getChild(0).getChild(0).toString().equals("-")){
+      System.out.println("\tNEGA");
+    }
+    System.out.println("\tADDA\t0,s");
+    System.out.println("\tADDSP\t2,i");
+  //  putNumParams = 0;
+ }
+
 
   @Override
   public void enterExpr_tail(MountCParser.Expr_tailContext ctx) {
@@ -87,9 +105,36 @@ public class CompilerListener extends MountCBaseListener {
           if(ctx.getParent().getParent().getChild(0).getChild(0).toString().equals("-")){
              System.out.println("\tNEGA");
           }
+            System.out.println("\tADDA\t0,s");
+            System.out.println("\tSTWA\t0,s");
+      }
+   }
+
+
+  @Override
+  public void exitExpr_tail(MountCParser.Expr_tailContext ctx) {
+      //System.out.println("Info: " + ctx.getParent().getParent().getClass().getName());
+      if(ctx.getChild(1).getChildCount() == 1){
+        if(ctx.getChild(0).getChild(0).toString().equals("-")){
+          System.out.println("\tNEGA\t");
+        }
           System.out.println("\tADDA\t0,s");
           System.out.println("\tSTWA\t0,s");
+          System.out.println("\tADDSP\t2,i");
       }
   }
+
+  @Override
+  public void enterActualArg(MountCParser.ActualArgContext ctx) {
+    System.out.println("\tSUBSP\t2,i");
+    System.out.println("\tSTWA\t0,s");
+  }
+
+  @Override
+  public void enterEmptyArglist(MountCParser.EmptyArglistContext ctx) {
+    System.out.println("\tSUBSP\t2,i");
+    System.out.println("\tSTWA\t0,s");
+  }
+
 
 }
