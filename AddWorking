@@ -15,6 +15,7 @@ public class CompilerListener extends MountCBaseListener {
   //  for a function, using the function's name as the key.
   private HashMap<String, Integer> symtab =  new HashMap<>();
   private boolean minus = false;
+  public int ifIDGenerator = 0;
 
   @Override
   public void enterProgram(MountCParser.ProgramContext ctx) {
@@ -34,6 +35,31 @@ public class CompilerListener extends MountCBaseListener {
   @Override
   public void exitProgram(MountCParser.ProgramContext ctx) {
     System.out.println("\t.END");
+  }
+  
+  @Override 
+  public void enterIfExpr(MountCParser.IfExprContext ctx) { 
+  	ifIDGenerator++;
+  }
+  
+  @Override 
+  public void exitIfExpr(MountCParser.IfExprContext ctx) { 
+  	System.out.println("__end"+ifIDGenerator+":\tNOP0");
+  	ifIDGenerator--;
+  }
+  
+  @Override 
+  public void enterThenPart(MountCParser.ThenPartContext ctx) { 
+    //System.out.println("\tSTWA\t"+ ",i");	// Current enterNumTerm just LDWA, nothing to store just yet
+      System.out.println("\tCPWA\t0,i");
+      System.out.println("\tBREQ\t__else"+ifIDGenerator);
+      
+  }
+  
+  @Override 
+  public void enterElsePart(MountCParser.ElsePartContext ctx) { 
+  	System.out.println("\tBR\t__end"+ifIDGenerator);
+  	System.out.println("__else"+ifIDGenerator+":\tNOP0");
   }
 
   @Override
@@ -55,15 +81,7 @@ public class CompilerListener extends MountCBaseListener {
 
   @Override
   public void exitNumTerm(MountCParser.NumTermContext ctx) {
-        //System.out.println("\tSUBSP\t2,i");
-        //System.out.println("\tLDWA\t" + ctx.NUM() + ",i");
-        //if (minus) {
-        //  System.out.println("\tNEGA\t");
-        //  System.out.println("\tSTWA\t0,s");
-        //  minus = false;
-        //} else {
-        //  System.out.println("\tSTWA\t0,s");
-        //}
+        
 
   }
 
@@ -77,7 +95,6 @@ public class CompilerListener extends MountCBaseListener {
   public void enterMinusOp(MountCParser.MinusOpContext ctx) {
     minus = true;
     System.out.println("\tSUBSP\t2,i");
-    //System.out.println("\tNEGA\t");
     System.out.println("\tSTWA\t0,s");
   }
 
