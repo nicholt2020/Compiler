@@ -16,6 +16,7 @@ public class CompilerListener extends MountCBaseListener {
   private HashMap<String, Integer> symtab =  new HashMap<>();
   private boolean minus = false;
   public int ifIDGenerator = 0;
+  public int symtabIndexMaybe = 1;
 
   @Override
   public void enterProgram(MountCParser.ProgramContext ctx) {
@@ -50,7 +51,6 @@ public class CompilerListener extends MountCBaseListener {
   
   @Override 
   public void enterThenPart(MountCParser.ThenPartContext ctx) { 
-    //System.out.println("\tSTWA\t"+ ",i");	// Current enterNumTerm just LDWA, nothing to store just yet
       System.out.println("\tCPWA\t0,i");
       System.out.println("\tBREQ\t__else"+ifIDGenerator);
       
@@ -119,6 +119,7 @@ public class CompilerListener extends MountCBaseListener {
   @Override
   public void enterFunCall(MountCParser.FunCallContext ctx) {
     String id = ctx.getParent().getChild(0).toString();
+    symtab.put(id, 0);							//This is wrong. Fix this with a better solution>?
     Integer numParams = symtab.get(id);
     if (numParams == null) {
        System.err.println("function " + id + " not defined at this point");
