@@ -15,7 +15,8 @@ public class CompilerListener extends MountCBaseListener {
   //  for a function, using the function's name as the key.
   private HashMap<String, Integer> symtab =  new HashMap<>();
   private boolean minus = false;
-  public int ifIDGenerator = 0;
+  public int ifIDGenerator = 1;
+  public int ifID = 1;
   public int symtabIndexMaybe = 1;
 
   @Override
@@ -40,13 +41,16 @@ public class CompilerListener extends MountCBaseListener {
   
   @Override 
   public void enterIfExpr(MountCParser.IfExprContext ctx) { 
-  	ifIDGenerator++;
+  	ifIDGenerator=((ifIDGenerator/ifID)+1)*ifID;
   }
   
   @Override 
   public void exitIfExpr(MountCParser.IfExprContext ctx) { 
   	System.out.println("__end"+ifIDGenerator+":\tNOP0");
-  	ifIDGenerator--;
+  	ifIDGenerator= ((ifIDGenerator/ifID)-1)*ifID;
+  	if (ifIDGenerator/ifID == 1){
+  		ifID = ifID*10;
+  	}
   }
   
   @Override 
@@ -119,7 +123,7 @@ public class CompilerListener extends MountCBaseListener {
   @Override
   public void enterFunCall(MountCParser.FunCallContext ctx) {
     String id = ctx.getParent().getChild(0).toString();
-    symtab.put(id, 0);							//This is wrong. Fix this with a better solution>?
+    symtab.put(id, 1);							//This is wrong. Fix this with a better solution>?
     Integer numParams = symtab.get(id);
     if (numParams == null) {
        System.err.println("function " + id + " not defined at this point");
