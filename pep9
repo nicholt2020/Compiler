@@ -13,6 +13,12 @@ main:	NOP0
 	SUBSP	2,i
 	STWA	0,s
 	LDWA	51,i
+	NEGA	
+	ADDA	0,s
+	STWA	0,s
+	ADDSP	2,i
+	ADDA	0,s
+	ADDSP	2,i
 	CPWA	0,i
 	BREQ	__else2
 	LDWA	2,i
