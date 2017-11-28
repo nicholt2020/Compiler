@@ -9,12 +9,16 @@ putint:	DECO	2,s
 getint:	DECI	2,s
 	RET
 main:	NOP0
-	LDWA	0,i
+	LDWA	51,i
+	SUBSP	2,i
+	STWA	0,s
+	LDWA	51,i
 	CPWA	0,i
 	BREQ	__else2
 	LDWA	2,i
 	BR	__end2
 __else2:	NOP0
+	SUBSP	2,i
 	LDWA	1,i
 	SUBSP	2,i
 	STWA	0,s
@@ -25,6 +29,11 @@ __else2:	NOP0
 	ADDA	0,s
 	STWA	0,s
 	ADDSP	2,i
+	SUBSP	2,i
+	STWA	0,s
+	CALL	putint
+	ADDSP	4,i
+	LDWA	-2,s
 __end2:	NOP0
 	STWA	2,s
 	RET
