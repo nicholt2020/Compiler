@@ -14,9 +14,6 @@ getint:	DECI	2,s
 	RET
 
 
-x	.EQUATE 0
-y	.EQUATE 2
-z	.EQUATE 4
 skyFun:	NOP0
 	SUBSP	2,i
 	LDWA	3,i
@@ -41,7 +38,7 @@ main:	NOP0
 	SUBSP	2,i
 	SUBSP	2,i
 	CALL	skyFun
-	ADDSP	8,i
+	ADDSP	2,i
 	LDWA	-2,s
 	SUBSP	2,i
 	STWA	0,s
