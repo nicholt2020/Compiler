@@ -41,6 +41,9 @@ public class CompilerListener extends MountCBaseListener {
   public void enterFun_def(MountCParser.Fun_defContext ctx) {
     String id = ctx.ID().toString();
     System.out.println(id + ":\tNOP0");
+    if(!symtab.containsKey(id)){
+      symtab.put(id, 0);
+    }
   }
 
   @Override
@@ -141,7 +144,7 @@ public class CompilerListener extends MountCBaseListener {
   	System.out.println("__end"+ifIDGenerator+":\tNOP0");
   	ifIDGenerator= ((ifIDGenerator/ifID)-1)*ifID;
   	if (ifIDGenerator/ifID == 1){
-  		ifID = ifID*10;
+  		ifID = ifID*100;
   	}
   }
 
