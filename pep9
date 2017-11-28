@@ -9,6 +9,9 @@ putint:	DECO	2,s
 getint:	DECI	2,s
 	RET
 main:	NOP0
+	LDWA	22,i
+	SUBSP	2,i
+	STWA	0,s
 	LDWA	51,i
 	SUBSP	2,i
 	STWA	0,s
@@ -16,6 +19,8 @@ main:	NOP0
 	NEGA	
 	ADDA	0,s
 	STWA	0,s
+	ADDSP	2,i
+	ADDA	0,s
 	ADDSP	2,i
 	CPWA	0,i
 	BREQ	__else2
