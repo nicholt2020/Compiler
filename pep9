@@ -11,14 +11,21 @@ putint:	DECO	2,s
 getint:	DECI	2,s
 	RET
 
-getchar:LBDA	charIn,d
-	STBA	4,s
+getchar:LDWA	0,i
+	LDBA	charIn,d
+	STBA	2,s
 	RET
 
 skyFun:	NOP0
 	SUBSP	2,i
+	SUBSP	2,i
 	CALL	getchar
 	ADDSP	2,i
+	LDWA	-2,s
+	SUBSP	2,i
+	STWA	0,s
+	CALL	putint
+	ADDSP	4,i
 	LDWA	-2,s
 	LDWA	0,i
 	STWA	2,s
