@@ -53,7 +53,6 @@ __else2:	NOP0
 	ADDSP	4,i
 	LDWA	-2,s
 __end2:	NOP0
-	LDWA	0,i
 	STWA	2,s
 	RET
 
