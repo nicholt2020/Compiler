@@ -16,7 +16,7 @@ fun_def_list:  fun_def fun_def_list
 
 fun_def:  ID '(' id_list ')'  '{' 'return' expr_list ';' '}' ;
 
-id_list:  ID id_list_tail
+id_list:  ID (',' ID)*
     |     /* epsilon */
     ;
 
@@ -39,12 +39,11 @@ expr:    expr thenPart expr elsePart expr  # ifExpr
 thenPart: '?' ;
 elsePart: ':' ;
 
-expr_tail:    op expr    #opExpr
-    |         /* epsilon */ #nothingExpr
+expr_tail:    op expr
     ;
 
 term: NUM            # numTerm
-    | ID term_tail            # idTerm
+    | ID term_tail   # idTerm
     ;
 
 term_tail: '(' arg_list ')'     # funCall
@@ -52,7 +51,7 @@ term_tail: '(' arg_list ')'     # funCall
     |      /* epsilon */    # epsilTT
     ;
 
-arg_list: expr arg_list_tail    # argListExpr
+arg_list: expr (',' expr)*    # argListExpr
     | /* epsilon */             # emptyArgList
     ;
 
