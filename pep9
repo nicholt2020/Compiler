@@ -15,9 +15,7 @@ getchar:LDWA	0,i
 	LDBA	charIn,d
 	STWA	2,s
 	RET
-putchar:LDBA	2,s
-	STBA	charOut,d
-	STBA	4,s
+putchar:STBA	charOut,d
 	RET
 
 skyFun:	NOP0
@@ -30,6 +28,10 @@ skyFun:	NOP0
 	STWA	0,s
 	CALL	putchar
 	ADDSP	4,i
+	LDWA	-2,s
+	SUBSP	2,i
+	CALL	getint
+	ADDSP	2,i
 	LDWA	-2,s
 	LDWA	0,i
 	STWA	2,s
