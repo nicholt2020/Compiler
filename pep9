@@ -19,7 +19,14 @@ putchar:STBA	charOut,d
 	RET
 skyFun:	NOP0
 	SUBSP	2,i
-	LDWA	2,s
+	LDWA	8,s
+	SUBSP	2,i
+	STWA	0,s
+	CALL	putint
+	ADDSP	4,i
+	LDWA	-2,s
+	SUBSP	2,i
+	LDWA	6,s
 	SUBSP	2,i
 	STWA	0,s
 	CALL	putint
@@ -32,8 +39,33 @@ skyFun:	NOP0
 	CALL	putint
 	ADDSP	4,i
 	LDWA	-2,s
+	LDWA	0,i
+	STWA	2,s
+	RET
+skyFun2:	NOP0
+	SUBSP	2,i
+	LDWA	10,s
+	SUBSP	2,i
+	STWA	0,s
+	CALL	putint
+	ADDSP	4,i
+	LDWA	-2,s
+	SUBSP	2,i
+	LDWA	8,s
+	SUBSP	2,i
+	STWA	0,s
+	CALL	putint
+	ADDSP	4,i
+	LDWA	-2,s
 	SUBSP	2,i
 	LDWA	6,s
+	SUBSP	2,i
+	STWA	0,s
+	CALL	putint
+	ADDSP	4,i
+	LDWA	-2,s
+	SUBSP	2,i
+	LDWA	4,s
 	SUBSP	2,i
 	STWA	0,s
 	CALL	putint
@@ -56,6 +88,23 @@ main:	NOP0
 	CALL	skyFun
 	ADDSP	8,i
 	LDWA	-2,s
+	SUBSP	2,i
+	LDWA	0,i
+	SUBSP	2,i
+	STWA	0,s
+	LDWA	1,i
+	SUBSP	2,i
+	STWA	0,s
+	LDWA	3,i
+	SUBSP	2,i
+	STWA	0,s
+	LDWA	4,i
+	SUBSP	2,i
+	STWA	0,s
+	CALL	skyFun2
+	ADDSP	10,i
+	LDWA	-2,s
+	LDWA	0,i
 	STWA	2,s
 	RET
 	.END
