@@ -18,7 +18,9 @@ getchar:LDWA	0,i
 putchar:STBA	charOut,d
 	RET
 skyFun:	NOP0
-	LDWA	7,i
+	LDWA	4,s
+	SUBSP	2,i
+	STWA	0,s
 	SUBSP	2,i
 	STWA	0,s
 	LDWA	7,i
