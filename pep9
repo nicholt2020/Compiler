@@ -19,6 +19,11 @@ putchar:STBA	charOut,d
 	RET
 skyFun:	NOP0
 	SUBSP	2,i
+	LDWA	1,i
+	SUBSP	2,i
+	STWA	0,s
+	SUBSP	2,i
+	STWA	0,s
 	LDWA	8,s
 	STWA	0,s
 	SUBSP	2,i
@@ -28,6 +33,7 @@ skyFun:	NOP0
 	ADDA	0,s
 	STWA	0,s
 	ADDSP	2,i
+	NEGA
 	CALL	putint
 	ADDSP	4,i
 	LDWA	-2,s
