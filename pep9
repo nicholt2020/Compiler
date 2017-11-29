@@ -21,6 +21,13 @@ skyFun:	NOP0
 	SUBSP	2,i
 	LDWA	8,s
 	STWA	0,s
+	SUBSP	2,i
+	STWA	0,s
+	LDWA	10,i
+	NEGA	
+	ADDA	0,s
+	STWA	0,s
+	ADDSP	2,i
 	CALL	putint
 	ADDSP	4,i
 	LDWA	-2,s
