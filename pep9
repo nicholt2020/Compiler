@@ -28,9 +28,24 @@ putchar:LDWA	2,s
 
 skyFun:	NOP0
 	SUBSP	2,i
-	LDWA	2,i
+	LDWA	1,i
 	SUBSP	2,i
 	STWA	0,s
+	LDWA	1,i
+	NEGA	
+	ADDA	0,s
+	STWA	0,s
+	ADDSP	2,i
+	CPWA	0,i
+	BREQ	__else2
+	LDWA	7,i
+	BR	__end2
+__else2:	NOP0
+	SUBSP	2,i
+	CALL	getchar
+	ADDSP	2,i
+	LDWA	-2,s
+__end2:	NOP0
 	CALL	putint
 	ADDSP	4,i
 	LDWA	-2,s
