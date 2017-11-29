@@ -1,26 +1,3 @@
-;Start Of Main Method
-	SUBSP	2,i
-	CALL	main
-	ADDSP	2,i
-	STOP
-
-;putint will print out an integer value.
-putint:	DECO	2,s
-	LDWA	2,s
-	STWA	4,s
-	RET
-
-;getint will retrieve input.
-getint:	DECI	2,s
-	RET
-
-;getchar will retrieve input and store the ASCII equivelant.
-getchar:LDWA	0,i
-	LDBA	charIn,d
-	STWA	2,s
-	RET
-
-;putint will print out an ASCII equivelant.
 putchar:LDWA	2,s
 	STBA	charOut,d
 	STWA	4,s
@@ -44,6 +21,21 @@ __else2:	NOP0
 	LDWA	2,i
 	SUBSP	2,i
 	STWA	0,s
+	SUBSP	2,i
+	STWA	0,s
+	LDWA	3,i
+	NEGA
+	ADDA	0,s
+	STWA	0,s
+	LDWA	4,i
+	NEGA
+	ADDA	0,s
+	STWA	0,s
+	LDWA	6,i
+	NEGA	
+	ADDA	0,s
+	STWA	0,s
+	ADDSP	2,i
 	CALL	putint
 	ADDSP	4,i
 	LDWA	-2,s
