@@ -18,14 +18,10 @@ getchar:LDWA	0,i
 putchar:STBA	charOut,d
 	RET
 skyFun:	NOP0
-	LDWA	8,s
+	LDWA	7,i
 	SUBSP	2,i
 	STWA	0,s
-	SUBSP	2,i
-	STWA	0,s
-	LDWA	6,s
-	SUBSP	2,i
-	STWA	0,s
+	LDWA	7,i
 	CPWA	0,i
 	BREQ	__else2
 	SUBSP	2,i
@@ -50,13 +46,13 @@ __end2:	NOP0
 	RET
 main:	NOP0
 	SUBSP	2,i
-	LDWA	0,i
+	LDWA	7,i
 	SUBSP	2,i
 	STWA	0,s
-	LDWA	1,i
+	LDWA	22,i
 	SUBSP	2,i
 	STWA	0,s
-	LDWA	2,i
+	LDWA	17,i
 	SUBSP	2,i
 	STWA	0,s
 	CALL	skyFun
