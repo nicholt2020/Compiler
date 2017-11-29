@@ -34,6 +34,7 @@ skyFun:	NOP0
 	CALL	putint
 	ADDSP	4,i
 	LDWA	-2,s
+	LDWA	0,i
 	STWA	2,s
 	RET
 
