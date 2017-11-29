@@ -40,14 +40,7 @@ skyFun:	NOP0
 	LDWA	7,i
 	BR	__end2
 __else2:	NOP0
-	SUBSP	2,i
-	SUBSP	2,i
-	CALL	getchar
-	ADDSP	2,i
-	LDWA	-2,s
-	CALL	putint
-	ADDSP	4,i
-	LDWA	-2,s
+	LDWA	2,i
 __end2:	NOP0
 	LDWA	0,i
 	STWA	2,s
