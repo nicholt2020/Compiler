@@ -43,7 +43,7 @@ draw:	NOP0
 	ADDSP	4,i
 	LDWA	-2,s
 	SUBSP	2,i
-	LDWA	33,i
+	LDWA	32,i
 	SUBSP	2,i
 	STWA	0,s
 	CALL	putchar
