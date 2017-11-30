@@ -63,7 +63,7 @@ skyFun:	NOP0
 	STWA	0,s
 	ADDSP	2,i
 	STWA	8,s
-	LDWA	1,i
+	LDWA	0,i
 	CPWA	0,i
 	BREQ	__else2
 	SUBSP	2,i
@@ -84,7 +84,7 @@ __else2:	NOP0
 	STWA	0,s
 	CALL	skyfun2
 	ADDSP	4,i
-	LDWA	-2,s
+	LDWA	-4,s
 	SUBSP	2,i
 	STWA	0,s
 	CALL	putint
