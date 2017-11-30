@@ -25,7 +25,7 @@ putchar:	LDWA	2,s
 	STBA	charOut,d
 	STWA	4,s
 	RET
-;draw_dash 2
+;draw_ASCII 2
 
 draw:	NOP0
 	SUBSP	2,i
@@ -36,7 +36,14 @@ draw:	NOP0
 	ADDSP	4,i
 	LDWA	-2,s
 	SUBSP	2,i
-	LDWA	10,i
+	LDWA	58,i
+	SUBSP	2,i
+	STWA	0,s
+	CALL	putchar
+	ADDSP	4,i
+	LDWA	-2,s
+	SUBSP	2,i
+	LDWA	33,i
 	SUBSP	2,i
 	STWA	0,s
 	CALL	putchar
@@ -44,6 +51,13 @@ draw:	NOP0
 	LDWA	-2,s
 	SUBSP	2,i
 	LDWA	4,s
+	SUBSP	2,i
+	STWA	0,s
+	CALL	putchar
+	ADDSP	4,i
+	LDWA	-2,s
+	SUBSP	2,i
+	LDWA	10,i
 	SUBSP	2,i
 	STWA	0,s
 	CALL	putchar
