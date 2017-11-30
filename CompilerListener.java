@@ -77,6 +77,7 @@ public class CompilerListener extends MountCBaseListener {
 
   @Override
   public void enterFun_def(MountCParser.Fun_defContext ctx) {
+    offset = 0;
     String id = ctx.ID().toString(); // Get the ID We're working with ex: MAIN
 
     int numParams;
@@ -117,7 +118,8 @@ public class CompilerListener extends MountCBaseListener {
 
   @Override
   public void exitFun_def(MountCParser.Fun_defContext ctx) {
-    System.out.println("\tSTWA\t2,s");
+    Integer numParams = symtab.get(functionName);
+    System.out.println("\tSTWA\t"+ (offset + (2*numParams + 2)) + ",s");
     System.out.println("\tRET");
   }
 
@@ -132,7 +134,7 @@ public class CompilerListener extends MountCBaseListener {
     // System.out.println(functionName + "_" + ctx.getChild(0).toString());
         int location = params.get(functionName+ "_" +ctx.getChild(0).toString())+ offset;
         System.out.println("\tLDWA\t" + location + ",s");
-        System.out.println("\tSTWA\t" + location + ",s");
+        //System.out.println("\tSTWA\t" + location + ",s");
     }
   }
 
@@ -159,11 +161,11 @@ public class CompilerListener extends MountCBaseListener {
       int numBytesToPop = 2*(symtab.get(id) + 1);
       pop(numBytesToPop);
 
-      if(ctx.getParent().getParent().getParent().getClass().equals(MountCParser.ArgListExprContext.class)){
-        System.out.println("\tLDWA\t-4,s");
-      } else {
+      //if(ctx.getParent().getParent().getParent().getClass().equals(MountCParser.ArgListExprContext.class)){
+      //  System.out.println("\tLDWA\t-4,s");
+      //} else {
         System.out.println("\tLDWA\t-2,s");
-      }
+      //}
   }
 
   @Override public void exitExprList(MountCParser.ExprListContext ctx) {
