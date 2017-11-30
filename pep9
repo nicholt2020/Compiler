@@ -15,13 +15,13 @@ getint:	DECI	2,s
 	RET
 
 ;getchar will retrieve input and store the ASCII equivelant.
-getchar:LDWA	0,i
+getchar:	LDWA	0,i
 	LDBA	charIn,d
 	STWA	2,s
 	RET
 
 ;putchar will print out an ASCII equivelant.
-putchar:LDWA	2,s
+putchar:	LDWA	2,s
 	STBA	charOut,d
 	STWA	4,s
 	RET
@@ -30,6 +30,12 @@ skyFun:	NOP0
 	SUBSP	2,i
 	LDWA	4,s
 	STWA	0,s
+	SUBSP	2,i
+	STWA	0,s
+	LDWA	3,i
+	ADDA	0,s
+	STWA	0,s
+	ADDSP	2,i
 	SUBSP	2,i
 	STWA	0,s
 	CALL	putint
@@ -41,8 +47,6 @@ skyFun:	NOP0
 main:	NOP0
 	SUBSP	2,i
 	LDWA	7,i
-	SUBSP	2,i
-	STWA	0,s
 	SUBSP	2,i
 	STWA	0,s
 	CALL	skyFun
