@@ -27,14 +27,36 @@ putchar:	LDWA	2,s
 	RET
 
 skyFun:	NOP0
+	LDWA	8,s
+	STWA	0,s
 	SUBSP	2,i
+	STWA	0,s
 	LDWA	4,s
+	STWA	0,s
+	NEGA	
+	ADDA	0,s
+	STWA	0,s
+	ADDSP	2,i
+	CPWA	0,i
+	BREQ	__else2
+	SUBSP	2,i
+	LDWA	10,s
 	STWA	0,s
 	SUBSP	2,i
 	STWA	0,s
 	CALL	putchar
 	ADDSP	4,i
 	LDWA	-2,s
+	BR	__end2
+__else2:	NOP0
+	SUBSP	2,i
+	LDWA	97,i
+	SUBSP	2,i
+	STWA	0,s
+	CALL	putchar
+	ADDSP	4,i
+	LDWA	-2,s
+__end2:	NOP0
 	STWA	2,s
 	RET
 
@@ -43,8 +65,17 @@ main:	NOP0
 	LDWA	7,i
 	SUBSP	2,i
 	STWA	0,s
+	LDWA	23,i
+	SUBSP	2,i
+	STWA	0,s
+	LDWA	19,i
+	SUBSP	2,i
+	STWA	0,s
+	LDWA	4,i
+	SUBSP	2,i
+	STWA	0,s
 	CALL	skyFun
-	ADDSP	4,i
+	ADDSP	10,i
 	LDWA	-2,s
 	STWA	2,s
 	RET
