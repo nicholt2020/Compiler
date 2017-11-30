@@ -30,14 +30,14 @@ putchar:	LDWA	2,s
 
 myfun:	NOP0
 	LDWA	2,s
-	STWA	2,s
+	STWA	4,s
 	SUBSP	2,i
 	CALL	getint
 	ADDSP	2,i
 	LDWA	-2,s
 	STWA	2,s
 	LDWA	2,s
-	STWA	2,s
+	STWA	4,s
 	SUBSP	2,i
 	STWA	0,s
 	LDWA	2,i
@@ -48,7 +48,7 @@ myfun:	NOP0
 	CPWA	0,i
 	BREQ	__else2
 	LDWA	4,s
-	STWA	2,s
+	STWA	4,s
 	LDWA	10,i
 	SUBSP	2,i
 	STWA	0,s
@@ -57,25 +57,25 @@ myfun:	NOP0
 	ADDA	0,s
 	STWA	0,s
 	LDWA	4,s
-	STWA	2,s
+	STWA	4,s
 	ADDA	0,s
 	STWA	0,s
 	ADDSP	2,i
 	STWA	4,s
 	LDWA	2,s
-	STWA	2,s
+	STWA	4,s
 	LDWA	3,i
 	STWA	2,s
 	BR	__end2
 __else2:	NOP0
 	LDWA	2,s
-	STWA	2,s
+	STWA	4,s
 	LDWA	25,i
 	STWA	2,s
 __end2:	NOP0
 	SUBSP	2,i
 	LDWA	6,s
-	STWA	2,s
+	STWA	4,s
 	SUBSP	2,i
 	STWA	0,s
 	CALL	putint
@@ -90,7 +90,7 @@ __end2:	NOP0
 	LDWA	-2,s
 	SUBSP	2,i
 	LDWA	4,s
-	STWA	2,s
+	STWA	4,s
 	SUBSP	2,i
 	STWA	0,s
 	CALL	putint
