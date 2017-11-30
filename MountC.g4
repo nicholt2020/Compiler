@@ -51,7 +51,7 @@ term_tail: '(' arg_list ')'     # funCall
     |      /* epsilon */    # epsilTT
     ;
 
-arg_list: expr (',' expr)*    # argListExpr
+arg_list: expr arg_list_tail      # argListExpr
     | /* epsilon */             # emptyArgList
     ;
 
