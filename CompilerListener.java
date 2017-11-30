@@ -158,7 +158,12 @@ public class CompilerListener extends MountCBaseListener {
       System.out.println("\tCALL\t" + id);
       int numBytesToPop = 2*(symtab.get(id) + 1);
       pop(numBytesToPop);
-      System.out.println("\tLDWA\t-2,s");
+
+      if(ctx.getParent().getParent().getParent().getClass().equals(MountCParser.ArgListExprContext.class)){
+        System.out.println("\tLDWA\t-4,s");
+      } else {
+        System.out.println("\tLDWA\t-2,s");
+      }
   }
 
   @Override public void exitExprList(MountCParser.ExprListContext ctx) {
