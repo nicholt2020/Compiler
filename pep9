@@ -25,18 +25,22 @@ putchar:	LDWA	2,s
 	STBA	charOut,d
 	STWA	4,s
 	RET
-;draw_ASCII 2
+;draw_dash 4
+;draw_value 2
 
 draw:	NOP0
+	LDWA	2,s
+	CPWA	0,i
+	BREQ	__else2
 	SUBSP	2,i
-	LDWA	4,s
+	LDWA	10,i
 	SUBSP	2,i
 	STWA	0,s
-	CALL	putint
+	CALL	putchar
 	ADDSP	4,i
 	LDWA	-2,s
 	SUBSP	2,i
-	LDWA	58,i
+	LDWA	6,s
 	SUBSP	2,i
 	STWA	0,s
 	CALL	putchar
@@ -49,43 +53,62 @@ draw:	NOP0
 	CALL	putchar
 	ADDSP	4,i
 	LDWA	-2,s
+	LDWA	2,s
+	LDWA	0,i
+	STWA	2,s
 	SUBSP	2,i
-	LDWA	4,s
-	SUBSP	2,i
-	STWA	0,s
-	CALL	putchar
-	ADDSP	4,i
-	LDWA	-2,s
-	SUBSP	2,i
-	LDWA	10,i
+	LDWA	6,s
 	SUBSP	2,i
 	STWA	0,s
-	CALL	putchar
-	ADDSP	4,i
-	LDWA	-2,s
-	SUBSP	2,i
-	LDWA	4,s
-	SUBSP	2,i
-	STWA	0,s
-	LDWA	1,i
-	ADDA	0,s
-	STWA	0,s
-	ADDSP	2,i
+	LDWA	6,s
 	SUBSP	2,i
 	STWA	0,s
 	CALL	draw
+	ADDSP	6,i
+	LDWA	-2,s
+	BR	__end2
+__else2:	NOP0
+	SUBSP	2,i
+	LDWA	6,s
+	SUBSP	2,i
+	STWA	0,s
+	CALL	putchar
 	ADDSP	4,i
 	LDWA	-2,s
-	STWA	4,s
+	SUBSP	2,i
+	LDWA	32,i
+	SUBSP	2,i
+	STWA	0,s
+	CALL	putchar
+	ADDSP	4,i
+	LDWA	-2,s
+	LDWA	2,s
+	LDWA	1,i
+	STWA	2,s
+	SUBSP	2,i
+	LDWA	6,s
+	SUBSP	2,i
+	STWA	0,s
+	LDWA	6,s
+	SUBSP	2,i
+	STWA	0,s
+	CALL	draw
+	ADDSP	6,i
+	LDWA	-2,s
+__end2:	NOP0
+	STWA	6,s
 	RET
 
 main:	NOP0
 	SUBSP	2,i
+	LDWA	45,i
+	SUBSP	2,i
+	STWA	0,s
 	LDWA	0,i
 	SUBSP	2,i
 	STWA	0,s
 	CALL	draw
-	ADDSP	4,i
+	ADDSP	6,i
 	LDWA	-2,s
 	STWA	2,s
 	RET
