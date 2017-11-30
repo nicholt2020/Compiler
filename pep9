@@ -57,7 +57,8 @@ skyFun:	NOP0
 	NEGA
 	ADDA	0,s
 	STWA	0,s
-	LDWA	9,i
+	LDWA	8,s
+	STWA	8,s
 	ADDA	0,s
 	STWA	0,s
 	ADDSP	2,i
