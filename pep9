@@ -119,7 +119,6 @@ __end2:	NOP0
 
 main:	NOP0
 	SUBSP	2,i
-	SUBSP	2,i
 	LDWA	3,i
 	SUBSP	2,i
 	STWA	0,s
@@ -131,11 +130,6 @@ main:	NOP0
 	STWA	0,s
 	CALL	fun
 	ADDSP	8,i
-	LDWA	-4,s
-	SUBSP	2,i
-	STWA	0,s
-	CALL	putint
-	ADDSP	4,i
 	LDWA	-2,s
 	STWA	2,s
 	RET
