@@ -1,4 +1,3 @@
-;Start Of Main Method
 	SUBSP	2,i
 	CALL	main
 	ADDSP	2,i
@@ -41,13 +40,6 @@ draw:	NOP0
 	LDWA	-2,s
 	SUBSP	2,i
 	LDWA	6,s
-	SUBSP	2,i
-	STWA	0,s
-	CALL	putchar
-	ADDSP	4,i
-	LDWA	-2,s
-	SUBSP	2,i
-	LDWA	32,i
 	SUBSP	2,i
 	STWA	0,s
 	CALL	putchar
