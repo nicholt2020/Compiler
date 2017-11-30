@@ -34,6 +34,8 @@ skyFun:	NOP0
 	LDWA	8,s
 	STWA	0,s
 	LDWA	17,i
+heeee
+	STWA	8,s
 	SUBSP	2,i
 	LDWA	8,s
 	STWA	0,s
