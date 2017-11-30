@@ -650,7 +650,7 @@ draw:	NOP0
 	ADDSP	4,i
 	LDWA	-2,s
 	LDWA	2,s
-	LDWA	1,i
+	LDWA	0,i
 	STWA	2,s
 	SUBSP	2,i
 	LDWA	6,s
@@ -1260,7 +1260,7 @@ __else2:	NOP0
 	ADDSP	4,i
 	LDWA	-2,s
 	LDWA	2,s
-	LDWA	0,i
+	LDWA	1,i
 	STWA	2,s
 	SUBSP	2,i
 	LDWA	6,s
