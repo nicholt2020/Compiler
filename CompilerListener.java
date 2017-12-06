@@ -10,17 +10,40 @@ import java.util.HashMap;
 
 public class CompilerListener extends MountCBaseListener {
 
-  //  Here is a primitive symbol table for function definitions.
-  //  It stores the number of arguments in the formal argument list
-  //  for a function, using the function's name as the key.
+  /*  Here is a primitive symbol table for function definitions.
+   *  It stores the number of arguments in the formal argument list
+      for a function, using the function's name as the key.
+  */
   private HashMap<String, Integer> symtab =  new HashMap<>();
+   
+  /* Here is a primitive symbol table for parameters.
+   * It stores the name of var EX: x for skyFun would be stored as "skyFun_x".
+   * It also stores the position of the parameter on the stack frame from the stack pointer.
+  */
   private HashMap<String, Integer> params =  new HashMap<>();
 
+   
+  // 
   private int ifIDGenerator = 1;
+   
+  //
   private int ifID = 1;
+   
+  /* functionName is used to record the name of the current function whenever you enter a
+   * function call so you can acturately retrieve variables from the params HashMap.
+  */ 
   private String functionName = null;
+   
+  /* Offset is used to calculate the distance to parameters when other changes are made to the 
+   * stack pointer after variable declaration.
+  */
   private int offset = 0;
 
+  /* Push is used whenever you need to "make room" on the stack for some operation.
+   * Push accepts a Boolean parameter as you may not always want to store the accumulator when 
+     you "make room".
+   * Push also adds to the offset to keep track of variable location.
+  */ 
   private void push(Boolean dontSTWA){
     System.out.println("\tSUBSP\t2,i");
     if(!dontSTWA){
@@ -29,11 +52,19 @@ public class CompilerListener extends MountCBaseListener {
     offset+=2;
   }
 
+  /* Pop is used whenever you need to "clean-up" the stack for some operation.
+   * Pop accepts an integer parameter that is used to pass through how many bytes to add to the 
+     stack pointer.
+   * Pop also subtracts from the offset to keep track of variable location.
+  */
   private void pop(int numBytesToPop){
     System.out.println("\tADDSP\t" + numBytesToPop + ",i");
     offset-=numBytesToPop;
   }
 
+  /* enterProgram is used to setup the initials methods of any legal MountC Program.
+   * Methods defined here are: putint(), getint(), getchar() and putchar().
+  */
   @Override
   public void enterProgram(MountCParser.ProgramContext ctx) {
     System.out.print("\n");
@@ -70,11 +101,25 @@ public class CompilerListener extends MountCBaseListener {
     symtab.put("putchar", 1);
 
   }
+   
+  /* exitProgram will conclude the compile of a legal MountC program with a .END as required for
+   * Pep/9 ASMB.
+  */
   @Override
   public void exitProgram(MountCParser.ProgramContext ctx) {
     System.out.println("\t.END");
   }
 
+  /* enterFun_def (EFD) is called whenever a new MountC function is being created.
+   * EFD will collect the ID or NAME of the function trying to be created EX: Main.
+   * Then EFD will calculate the number of params of the function.
+   * EFD will continue to check to see if the function is in the symtab.
+   * If the function is not in the symtab then EFD will add the current function along with # of params.
+   * EFD will continue to use the number of parameters to loop through and declare all needed params in PEP/9 in 
+     the correction position on the stack.
+   * EFD the continues by starting the function definition with EX: Main NOP0 and setting the function id to the global
+     string functionName. 
+  */
   @Override
   public void enterFun_def(MountCParser.Fun_defContext ctx) {
     offset = 0;
@@ -93,17 +138,21 @@ public class CompilerListener extends MountCBaseListener {
 
     int numBytes = 2*(symtab.get(id) + 1) - 2;
 
-    for(int i = 0; i < ctx.getChild(2).getChildCount(); i += 2){ // Loop through the number of params and Declare them all in PEP 9
-      System.out.println(";"+id + "_" + ctx.getChild(2).getChild(i).toString() +" "+numBytes);
+    for(int i = 0; i < ctx.getChild(2).getChildCount(); i += 2){ 
       params.put(id + "_" + ctx.getChild(2).getChild(i).toString(), numBytes);
       numBytes -= 2;
-      //System.out.println(id + "_" + ctx.getChild(2).getChild(i).toString() + ", " + i);
     }
 
     System.out.print("\n");
     System.out.println(id + ":\tNOP0");
-
     functionName = id;
+  }
+   
+  @Override
+  public void exitFun_def(MountCParser.Fun_defContext ctx) {
+    Integer numParams = symtab.get(functionName);
+    System.out.println("\tSTWA\t"+ (offset + (2*numParams + 2)) + ",s");
+    System.out.println("\tRET");
   }
 
   @Override
@@ -113,14 +162,6 @@ public class CompilerListener extends MountCBaseListener {
           int location = params.get(functionName+"_"+ctx.getParent().getChild(0).toString()) + offset;
           System.out.println("\tSTWA\t" + location + ",s");
       }
-  }
-
-
-  @Override
-  public void exitFun_def(MountCParser.Fun_defContext ctx) {
-    Integer numParams = symtab.get(functionName);
-    System.out.println("\tSTWA\t"+ (offset + (2*numParams + 2)) + ",s");
-    System.out.println("\tRET");
   }
 
   @Override
