@@ -1,9 +1,9 @@
 /*
    This listener generates Pep/9 assembly for a (mini) MountC program.
-   Of the four i/o functions of MountC, it only predefines putint.
-   K. Weber
-   weberk@mountunion.edu
-   10-nov-2017
+   Of the four i/o functions of MountC.
+   Skyler Knecht
+   knechtsr2019@mountunion.edu
+   Dec 8, 2017
 */
 
 import java.util.HashMap;
@@ -138,10 +138,8 @@ public class CompilerListener extends MountCBaseListener {
     int numBytes = 2*(symtab.get(id) + 1) - 2;
 
     for(int i = 0; i < ctx.getChild(2).getChildCount(); i += 2){ // Loop through the number of params and Declare them all in PEP 9
-      //System.out.println(";"+id + "_" + ctx.getChild(2).getChild(i).toString() +" "+numBytes);
       params.put(id + "_" + ctx.getChild(2).getChild(i).toString(), numBytes);
       numBytes -= 2;
-      //System.out.println(id + "_" + ctx.getChild(2).getChild(i).toString() + ", " + i);
     }
 
     System.out.print("\n");
@@ -150,24 +148,6 @@ public class CompilerListener extends MountCBaseListener {
     functionName = id;
   }
    
- /* exitEquExp will store expressions into any defined parameteres.
-  * A example is something like y = 7 + 17; if y is defined the location of y will be overwritten. 
-  * If y is not defined in the parameters of the fun defintion EX: foo(a, b) the program will throw an error 
-  * saying parameter not defined.
-  */
-  @Override
-  public void exitEquExp(MountCParser.EquExpContext ctx) {
-    //System.out.println(ctx.getParent().getChild(0).toString());
-      if(params.containsKey(functionName+"_"+ctx.getParent().getChild(0).toString())){
-          int location = params.get(functionName+"_"+ctx.getParent().getChild(0).toString()) + offset;
-          System.out.println("\tSTWA\t" + location + ",s");
-      } else {
-         System.err.println("Parameter: " + ctx.getParent().getChild(0).toString() + " doesen't exist.");
-         System.exit(3);
-      }
-  }
-
-
   @Override
   public void exitFun_def(MountCParser.Fun_defContext ctx) {
     Integer numParams = symtab.get(functionName);
@@ -183,11 +163,25 @@ public class CompilerListener extends MountCBaseListener {
   @Override
   public void enterIdTerm(MountCParser.IdTermContext ctx) {
     if(params.containsKey(functionName + "_" + ctx.getChild(0).toString())){
-    // System.out.println(functionName + "_" + ctx.getChild(0).toString());
         int location = params.get(functionName+ "_" +ctx.getChild(0).toString()) + offset;
         System.out.println("\tLDWA\t" + location + ",s");
-        //System.out.println("\tSTWA\t" + location + ",s");
     }
+  }
+   
+ /* exitEquExp will store expressions into any defined parameteres.
+  * A example is something like y = 7 + 17; if y is defined the location of y will be overwritten. 
+  * If y is not defined in the parameters of the fun defintion EX: foo(a, b) the program will throw an error 
+  * saying parameter not defined.
+  */
+  @Override
+  public void exitEquExp(MountCParser.EquExpContext ctx) {
+      if(params.containsKey(functionName+"_"+ctx.getParent().getChild(0).toString())){
+          int location = params.get(functionName+"_"+ctx.getParent().getChild(0).toString()) + offset;
+          System.out.println("\tSTWA\t" + location + ",s");
+      } else {
+         System.err.println("Parameter: " + ctx.getParent().getChild(0).toString() + " doesen't exist.");
+         System.exit(3);
+      }
   }
 
 
@@ -212,12 +206,7 @@ public class CompilerListener extends MountCBaseListener {
       System.out.println("\tCALL\t" + id);
       int numBytesToPop = 2*(symtab.get(id) + 1);
       pop(numBytesToPop);
-
-      //if(ctx.getParent().getParent().getParent().getClass().equals(MountCParser.ArgListExprContext.class)){
-      //  System.out.println("\tLDWA\t-4,s");
-      //} else {
-        System.out.println("\tLDWA\t-2,s");
-      //}
+      System.out.println("\tLDWA\t-2,s");
   }
 
   @Override public void exitExprList(MountCParser.ExprListContext ctx) {
@@ -262,14 +251,11 @@ public class CompilerListener extends MountCBaseListener {
   @Override
   public void enterActualArg(MountCParser.ActualArgContext ctx){
     push(false);
-    //System.out.println("ddd");
   }
 
   @Override
   public void enterEmptyArglist(MountCParser.EmptyArglistContext ctx) {
-    push(false);
-  //  System.out.println("fff");
-
+    push(false); 
   }
 
   //  If Statments ------------
