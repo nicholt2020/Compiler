@@ -1,7 +1,7 @@
 foo(a, b){
-   return (a - 7)
-          ? putchar(getchar())
-          : putint(getint()),
+   return (a - b)
+          ? putchar(77)
+          : putint(777),
           ;
 }
 
