@@ -1,3 +1,137 @@
+-/*
+-   This listener generates Pep/9 assembly for a (mini) MountC program.
+-   Of the four i/o functions of MountC, it only predefines putint.
+-   K. Weber
+-   weberk@mountunion.edu
+-   10-nov-2017
+-*/
+-
+-import java.util.HashMap;
+-
+-public class CompilerListener extends MountCBaseListener {
+-
+-  /*  Here is a primitive symbol table for function definitions.
+-   *  It stores the number of arguments in the formal argument list
+-      for a function, using the function's name as the key.
+-  */
+-  private HashMap<String, Integer> symtab =  new HashMap<>();
+-   
+-  /* Here is a primitive symbol table for parameters.
+-   * It stores the name of var EX: x for skyFun would be stored as "skyFun_x".
+-   * It also stores the position of the parameter on the stack frame from the stack pointer.
+-  */
+-  private HashMap<String, Integer> params =  new HashMap<>();
+-
+-   
+-  // 
+-  private int ifIDGenerator = 1;
+-   
+-  //
+-  private int ifID = 1;
+-   
+-  /* functionName is used to record the name of the current function whenever you enter a
+-   * function call so you can acturately retrieve variables from the params HashMap.
+-  */ 
+-  private String functionName = null;
+-   
+-  /* Offset is used to calculate the distance to parameters when other changes are made to the 
+-   * stack pointer after variable declaration.
+-  */
+-  private int offset = 0;
+-
+-  /* Push is used whenever you need to "make room" on the stack for some operation.
+-   * Push accepts a Boolean parameter as you may not always want to store the accumulator when 
+-     you "make room".
+-   * Push also adds to the offset to keep track of variable location.
+-  */ 
+-  private void push(Boolean dontSTWA){
+-    System.out.println("\tSUBSP\t2,i");
+-    if(!dontSTWA){
+-      System.out.println("\tSTWA\t0,s");
+-    }
+-    offset+=2;
+-  }
+-
+-  /* Pop is used whenever you need to "clean-up" the stack for some operation.
+-   * Pop accepts an integer parameter that is used to pass through how many bytes to add to the 
+-     stack pointer.
+-   * Pop also subtracts from the offset to keep track of variable location.
+-  */
+-  private void pop(int numBytesToPop){
+-    System.out.println("\tADDSP\t" + numBytesToPop + ",i");
+-    offset-=numBytesToPop;
+-  }
+-
+-  /* enterProgram is used to setup the initials methods of any legal MountC Program.
+-   * Methods defined here are: putint(), getint(), getchar() and putchar().
+-  */  -/*
+-   This listener generates Pep/9 assembly for a (mini) MountC program.
+-   Of the four i/o functions of MountC, it only predefines putint.
+-   K. Weber
+-   weberk@mountunion.edu
+-   10-nov-2017
+-*/
+-
+-import java.util.HashMap;
+-
+-public class CompilerListener extends MountCBaseListener {
+-
+-  /*  Here is a primitive symbol table for function definitions.
+-   *  It stores the number of arguments in the formal argument list
+-      for a function, using the function's name as the key.
+-  */
+-  private HashMap<String, Integer> symtab =  new HashMap<>();
+-   
+-  /* Here is a primitive symbol table for parameters.
+-   * It stores the name of var EX: x for skyFun would be stored as "skyFun_x".
+-   * It also stores the position of the parameter on the stack frame from the stack pointer.
+-  */
+-  private HashMap<String, Integer> params =  new HashMap<>();
+-
+-   
+-  // 
+-  private int ifIDGenerator = 1;
+-   
+-  //
+-  private int ifID = 1;
+-   
+-  /* functionName is used to record the name of the current function whenever you enter a
+-   * function call so you can acturately retrieve variables from the params HashMap.
+-  */ 
+-  private String functionName = null;
+-   
+-  /* Offset is used to calculate the distance to parameters when other changes are made to the 
+-   * stack pointer after variable declaration.
+-  */
+-  private int offset = 0;
+-
+-  /* Push is used whenever you need to "make room" on the stack for some operation.
+-   * Push accepts a Boolean parameter as you may not always want to store the accumulator when 
+-     you "make room".
+-   * Push also adds to the offset to keep track of variable location.
+-  */ 
+-  private void push(Boolean dontSTWA){
+-    System.out.println("\tSUBSP\t2,i");
+-    if(!dontSTWA){
+-      System.out.println("\tSTWA\t0,s");
+-    }
+-    offset+=2;
+-  }
+-
+-  /* Pop is used whenever you need to "clean-up" the stack for some operation.
+-   * Pop accepts an integer parameter that is used to pass through how many bytes to add to the 
+-     stack pointer.
+-   * Pop also subtracts from the offset to keep track of variable location.
+-  */
+-  private void pop(int numBytesToPop){
+-    System.out.println("\tADDSP\t" + numBytesToPop + ",i");
+-    offset-=numBytesToPop;
+-  }
+-
+-  /* enterProgram is used to setup the initials methods of any legal MountC Program.
+-   * Methods defined here are: putint(), getint(), getchar() and putchar().
+-  */
+
   @Override
   public void exitEquExp(MountCParser.EquExpContext ctx) {
     //System.out.println(ctx.getParent().getChild(0).toString());
