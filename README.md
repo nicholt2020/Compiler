@@ -16,5 +16,5 @@ java Compiler test.c
 
 where "test.c" can be replaced with whatever the name of the MountC file you're trying to compile is named.
 
-This will output runnable Pep/9 code. You can also redirect the output to another file by using a command EX: java Compiler <name of c file>.c > output.txt. This can be useful if the produced PEP9 code is so long that it runs past the terminal window, which can make it difficult to copy/paste into the Pep/9 program to run.
+This will output runnable Pep/9 code. You can also redirect the output to another file by using a command EX: java Compiler < name of c file >.c > output.txt. This can be useful if the produced PEP9 code is so long that it runs past the terminal window, which can make it difficult to copy/paste into the Pep/9 program to run.
 
