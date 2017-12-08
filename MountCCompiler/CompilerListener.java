@@ -1,11 +1,14 @@
 /*
    This listener generates Pep/9 assembly for a (mini) MountC program.
    Of the four i/o functions of MountC.
-   Skyler Knecht
-   knechtsr2019@mountunion.edu
-   Gaston C. Marian
-   marianga@mountunion.edu
-   Dec 8, 2017
+   Authors:
+   Name: Skyler Knecht; Email: knechtsr2019@mountunion.edu
+   Name: Gaston C. Marian; Email: marianga@mountunion.edu
+   
+   Credits Due:
+   Name: Dr. Weber Kenneth; Email: weberk.mountunion.edu
+  
+   Last Updated: Dec 8, 2017 9:47AM
 */
 
 import java.util.HashMap;
