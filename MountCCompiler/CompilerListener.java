@@ -149,13 +149,21 @@ public class CompilerListener extends MountCBaseListener {
 
     functionName = id;
   }
-
+   
+ /* exitEquExp will store expressions into any defined parameteres.
+  * A example is something like y = 7 + 17; if y is defined the location of y will be overwritten. 
+  * If y is not defined in the parameters of the fun defintion EX: foo(a, b) the program will throw an error 
+  * saying parameter not defined.
+  */
   @Override
   public void exitEquExp(MountCParser.EquExpContext ctx) {
     //System.out.println(ctx.getParent().getChild(0).toString());
       if(params.containsKey(functionName+"_"+ctx.getParent().getChild(0).toString())){
           int location = params.get(functionName+"_"+ctx.getParent().getChild(0).toString()) + offset;
           System.out.println("\tSTWA\t" + location + ",s");
+      } else {
+         System.err.println("Parameter: " + ctx.getParent().getChild(0).toString() + " doesen't exist.");
+         System.exit(3);
       }
   }
 
