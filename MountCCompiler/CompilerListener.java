@@ -228,10 +228,11 @@ public class CompilerListener extends MountCBaseListener {
       System.out.println("\tLDWA\t-2,s");
   }
 
-  @Override public void exitExprList(MountCParser.ExprListContext ctx) {
+  @Override 
+   public void exitExprList(MountCParser.ExprListContext ctx) {
     if(ctx.getParent().getChild(0).getChild(0).toString().equals("-")){
       System.out.println("\tNEGA");
-    }
+   }
 
     // When you exit an exprList add the current subtotal to the Accumulator and cleanup the subtotal with ADDSP.
     if(ctx.getParent().getParent().getClass().equals(MountCParser.Expr_tailContext.class) || ctx.getParent().getParent().getParent().getClass().equals(MountCParser.Expr_tailContext.class)){
