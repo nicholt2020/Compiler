@@ -3,6 +3,8 @@
    Of the four i/o functions of MountC.
    Skyler Knecht
    knechtsr2019@mountunion.edu
+   Gaston C. Marian
+   marianga@mountunion.edu
    Dec 8, 2017
 */
 
