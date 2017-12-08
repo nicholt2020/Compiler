@@ -27,7 +27,7 @@ public class CompilerListener extends MountCBaseListener {
   */
   private HashMap<String, Integer> params =  new HashMap<>();
 
- /* int variables that are used to keep track of if statements as you go in and out of various levels.  
+ /* ifIDGenerator & ifID are int variables that are used to keep track of if statements as you go in and out of various levels.  
   * they are currently multiplied together, with the scale being multiplied by 1000 every time to move
   * to another level of nesting. Upon thinking about it, it would likely be clearer to write IDs as
   * ifIDGenerator&ifID rather than ifIDGenerator*ifID, but it's already done.
