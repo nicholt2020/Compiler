@@ -4,6 +4,7 @@
    Authors:
    Name: Skyler Knecht; Email: knechtsr2019@mountunion.edu
    Name: Gaston C. Marian; Email: marianga@mountunion.edu
+   Name: Tychell Nichols; Email: nicholt2020@mountunion.edu
    
    Credits Due:
    Name: Dr. Weber Kenneth; Email: weberk@mountunion.edu
