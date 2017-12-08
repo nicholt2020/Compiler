@@ -6,7 +6,7 @@
    Name: Gaston C. Marian; Email: marianga@mountunion.edu
    
    Credits Due:
-   Name: Dr. Weber Kenneth; Email: weberk.mountunion.edu
+   Name: Dr. Weber Kenneth; Email: weberk@mountunion.edu
   
    Last Updated: Dec 8, 2017 9:47AM
 */
@@ -109,7 +109,7 @@ public class CompilerListener extends MountCBaseListener {
   }
    
  /* exitProgram will conclude the compile of a legal MountC program with a .END as required for
-  * Pep/9 ASMB.
+  * Pep/9 asembly.
   */
   @Override
   public void exitProgram(MountCParser.ProgramContext ctx) {
@@ -157,7 +157,11 @@ public class CompilerListener extends MountCBaseListener {
 
     functionName = id;
   }
-   
+    
+ /* exitFun_def will store the number of params of the current function and use that to store the current 
+    accumulator into the RV of the function. Then the method will continue by printing out RET as required for 
+    PEP9 asembly.
+  */ 
   @Override
   public void exitFun_def(MountCParser.Fun_defContext ctx) {
     Integer numParams = symtab.get(functionName);
@@ -165,33 +169,38 @@ public class CompilerListener extends MountCBaseListener {
     System.out.println("\tRET");
   }
 
+ /* enterNumTerm will load what numerical value is being entered into the accumulator for use in 
+    expressions, storage ect.. EX: y = 7; , reutrn 7 + 17 + 27;
+  */
   @Override
   public void enterNumTerm(MountCParser.NumTermContext ctx) {
         System.out.println("\tLDWA\t" + ctx.NUM() + ",i");
   }
-
+   
+   
+ /* enterIdTerm will load the value in the location of whatever ID the parser just entered.
+    EX: putint(y) - the program will load whatever is in Y into the accumulator for later use in putint()
+  */
   @Override
   public void enterIdTerm(MountCParser.IdTermContext ctx) {
     if(params.containsKey(functionName + "_" + ctx.getChild(0).toString())){
-        int location = params.get(functionName+ "_" +ctx.getChild(0).toString()) + offset;
-        System.out.println("\tLDWA\t" + location + ",s");
+       int location = params.get(functionName+ "_" +ctx.getChild(0).toString()) + offset;
+       System.out.println("\tLDWA\t" + location + ",s");
+    } else {
+       System.err.println("Parameter: " + ctx.getParent().getChild(0).toString() + " doesen't exist.");
+       System.exit(4);
     }
   }
    
  /* exitEquExp will store expressions into any defined parameteres.
-  * A example is something like y = 7 + 17; if y is defined the location of y will be overwritten. 
-  * If y is not defined in the parameters of the fun defintion EX: foo(a, b) the program will throw an error 
-  * saying parameter not defined.
+  * A example is something like y = 7 + 17; if y is defined the location of y will be overwritten.
+  * There is not test needed to see if the ID is defined EX: 'y' as the error will already be thrown when
+  * enterIDTerm is called.
   */
   @Override
   public void exitEquExp(MountCParser.EquExpContext ctx) {
-      if(params.containsKey(functionName+"_"+ctx.getParent().getChild(0).toString())){
-          int location = params.get(functionName+"_"+ctx.getParent().getChild(0).toString()) + offset;
-          System.out.println("\tSTWA\t" + location + ",s");
-      } else {
-         System.err.println("Parameter: " + ctx.getParent().getChild(0).toString() + " doesen't exist.");
-         System.exit(3);
-      }
+       int location = params.get(functionName+"_"+ctx.getParent().getChild(0).toString()) + offset;
+       System.out.println("\tSTWA\t" + location + ",s");
   }
 
 
